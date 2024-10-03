@@ -14,6 +14,7 @@ import Foundation
 // MARK: - - Protocols
 protocol Networking {
     func getData(urlPath: String) async throws -> Data
+    func get<Model: Decodable>(urlPath: String, modelType: Model.Type) async throws -> Model
 }
 
 // MARK: - - Service
