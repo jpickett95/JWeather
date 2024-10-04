@@ -5,7 +5,7 @@
 //  Created by Jonah Pickett on 10/3/24.
 //
 
-enum SkyImages: String {
+enum SkyImage: String {
     case clear = "clear-sky"
     case cloudy = "cloudy-sky"
     case evening = "evening-sky"
@@ -17,3 +17,5 @@ enum SkyImages: String {
     case mist = "misty-sky"
     case thunderstorm = "thunderstorm-sky"
 }
+
+
