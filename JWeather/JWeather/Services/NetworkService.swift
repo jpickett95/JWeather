@@ -95,6 +95,8 @@ extension NetworkService: JSONDecoding {
      - Throws: An Error if the deocding fails.
      */
     public func decode<Model>(data: Data, modelType: Model.Type) async throws -> Model where Model : Decodable {
-        return try JSONDecoder().decode(Model.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(Model.self, from: data)
     }
 }
