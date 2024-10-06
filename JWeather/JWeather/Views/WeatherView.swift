@@ -11,21 +11,41 @@ struct WeatherView: View {
     var body: some View {
         ZStack{
             // MARK: Background Image
-            Image(SkyImages.clear.rawValue, bundle: nil)
+            Image(SkyImage.clear.rawValue, bundle: nil)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack {
+            VStack(spacing: 15) {
+                // MARK: Current Weather
                 CurrentWeatherContentView()
+
+                HStack(spacing: 15) {
+                    // MARK: Sunset
+                    ContentBlockView()
                     
-                ScrollView {
                     
+                    // MARK: Feels Like
+                    ContentBlockView()
                 }
+                
+                HStack(spacing: 15) {
+                    // MARK: Precipitation
+                    ContentBlockView()
+                    
+                    
+                    // MARK: Visbility
+                    ContentBlockView()
+                }
+                
             }
             
             
         }
+    }
+    
+    func currentWeatherView() -> some View {
+        Text("Yas!")
     }
 }
 
