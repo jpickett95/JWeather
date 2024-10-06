@@ -67,6 +67,49 @@ public struct NetworkService: Networking {
         let data = try await getData(urlPath: urlPath)
         return try await decode(data: data, modelType: modelType)
     }
+    
+    /**
+     An asynchronous, function that requests data from the given Endpoint input parameter, and makes an api call.
+          
+     - Parameters:
+        - endpoint: An Endpoint object value containing the url components.
+
+     - Returns: The data retieved from the url path as a Data object.
+     
+     - Throws: An Error if there is an invalid URLResponse or url path.
+     */
+    func request(endpoint: Endpoint) async throws -> Data {
+        let url = endpoint.baseURL.appendingPathComponent(endpoint.path)
+        
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        
+        switch endpoint.method {
+        case .get:
+            let queryItems = endpoint.parameters.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+            urlComponents?.queryItems = queryItems
+        default:
+            throw NetworkingErrors.unknown("Failed to switch on endpoint method. Use .get instead.")
+        }
+        
+        guard let url = urlComponents?.url else {
+            throw NetworkingErrors.invalidUrl("Failed to construct url with URLComponents.")
+        }
+        
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = endpoint.headers
+        request.httpMethod = endpoint.method.rawValue
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        let httpResponse = response as? HTTPURLResponse
+        guard let _response = httpResponse, (200...299).contains(_response.statusCode) else {
+            throw ErrorHandlingService.statusCodeSwitch(httpResponse?.statusCode ?? 0)
+        }
+        
+        return data
+    }
 }
 
 // MARK: - JSON Decoder
