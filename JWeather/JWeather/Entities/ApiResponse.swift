@@ -6,8 +6,8 @@
 //
 
 struct ApiResponse: Decodable {
-    let lat: Float
-    let lon: Float
+    let lat: Double
+    let lon: Double
     let timezone: String
     let timezoneOffset: Int
     let current: Current

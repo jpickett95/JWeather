@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CurrentWeatherContentView: View {
+    //private let presenter = CurrentWeatherContentPresenter()
+    
     var body: some View {
         VStack{
             //MARK: Location
