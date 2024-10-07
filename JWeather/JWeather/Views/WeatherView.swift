@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct WeatherView: View {
+    private let interactor: WeatherInteractor
+    
+    init(interactor: WeatherInteractor) {
+        self.interactor = interactor
+    }
+    
     var body: some View {
         ZStack{
             // MARK: Background Image
@@ -18,7 +24,7 @@ struct WeatherView: View {
             
             VStack(spacing: 15) {
                 // MARK: Current Weather
-                CurrentWeatherContentView()
+                CurrentWeatherContentView(presenter: CurrentWeatherContentPresenter(interactor: interactor))
 
                 HStack(spacing: 15) {
                     // MARK: Sunset
@@ -50,5 +56,5 @@ struct WeatherView: View {
 }
 
 #Preview {
-    WeatherView()
+    WeatherView(interactor: WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }
