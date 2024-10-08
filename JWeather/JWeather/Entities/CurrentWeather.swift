@@ -7,7 +7,7 @@
 
 struct CurrentWeather {
     let location: String
-    let temperature: String
+    var temperature: String
     let sky: String
     let highLowTemp: String
 }

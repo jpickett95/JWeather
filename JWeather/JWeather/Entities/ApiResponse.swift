@@ -24,9 +24,9 @@ struct ApiResponse: Decodable {
 }
 
 struct Current: Decodable {
-    let dt: Int
-    let sunrise: Int?
-    let sunset: Int?
+    let dt: Double
+    let sunrise: Double?
+    let sunset: Double?
     let temp: Float
     let feelsLike: Float
     let pressure: Int
@@ -35,9 +35,9 @@ struct Current: Decodable {
     let uvi: Float
     let clouds: Int
     let visibility: Int
-    let windSpeed: Float
+    let windSpeed: Double
     let windDeg: Int
-    let windGust: Float?
+    let windGust: Double?
     let rain: Rain?
     let snow: Snow?
     let weather: [Weather]
@@ -64,7 +64,7 @@ struct Weather: Decodable {
 }
 
 struct Rain: Decodable {
-    let oneH: Float
+    let oneH: Double
     
     enum CodingKeys: String, CodingKey {
         case oneH = "1h"
@@ -72,7 +72,7 @@ struct Rain: Decodable {
 }
 
 struct Snow: Decodable {
-    let oneH: Float
+    let oneH: Double
     
     enum CodingKeys: String, CodingKey {
         case oneH = "1h"
@@ -80,14 +80,14 @@ struct Snow: Decodable {
 }
 
 struct Minutely: Decodable {
-    let dt: Int?
+    let dt: Double?
     let precipitation: Int?
 }
 
 struct Daily: Decodable {
-    let dt: Int
-    let sunrise: Int
-    let sunset: Int
+    let dt: Double
+    let sunrise: Double
+    let sunset: Double
     let moonrise: Int
     let moonset: Int
     let moonPhase: Double
@@ -97,9 +97,9 @@ struct Daily: Decodable {
     let pressure: Int
     let humidity: Int
     let dewPoint: Float
-    let windSpeed: Float
+    let windSpeed: Double
     let windDeg: Int
-    let windGust: Float
+    let windGust: Double
     let weather: [Weather]
     let clouds: Int
     let pop: Float
@@ -149,4 +149,20 @@ struct WeatherAlert: Decodable {
 //        case senderName = "sender_name"
 //        case event, start, end, description, tags
 //    }
+}
+
+struct GeocodingApiResponse: Decodable {
+    let name: String
+    let lat: Double
+    let lon: Double
+    let country: String
+    let state: String?
+}
+
+struct ZipGeocodingApiResponse: Decodable {
+    let zip: String
+    let name: String
+    let lat: Double
+    let lon: Double
+    let country: String
 }

@@ -118,7 +118,7 @@ public struct ErrorHandlingService: ErrorHandling {
         case 511:
             return ServerErrorResponse.networkAuthenticationRequired("Server Error Response: (Network Authentication Required) Indicates that the client needs to authenticate to gain network access.")
         default:
-            return NetworkingErrors.unknown("Url session returned with an unknown or invalid response with status code: \(statusCode)")
+            return NetworkingError.unknown("Url session returned with an unknown or invalid response with status code: \(statusCode)")
         }
     }
 }

@@ -18,7 +18,7 @@
  - dataError
  - unknown
  */
-enum NetworkingErrors: Error {
+enum NetworkingError: Error {
     /// The URL path is invalid or corrupted.
     case invalidUrl(String)
     /// The URLSession returned with a HTTPURLResponce status code outside of the range (200-299).
@@ -27,6 +27,22 @@ enum NetworkingErrors: Error {
     case dataError
     /// An unknown error has occurred
     case unknown(String)
+}
+
+// MARK: - - Decoding
+/**
+ Possible error that can be thrown from decoding
+ ### Error Cases:
+ - invalidJSON
+ - invalidData
+ - missingKey
+ - typeMismatch
+ */
+enum DecodingError: Error {
+    case invalidJSON
+    case invalidData(String)
+    case missingKey
+    case typeMismatch
 }
 
 
