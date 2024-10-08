@@ -9,16 +9,20 @@ import Foundation
 
 class CurrentWeatherContentPresenter: ObservableObject {
     private let interactor: WeatherInteractor
-    @Published var currentWeather: CurrentWeather?
+    @Published var locationName: String?
+    @Published var temperature: String?
+    @Published var highLowTemp: String?
+    @Published var sky: String?
     
     init(interactor: WeatherInteractor) {
         self.interactor = interactor
-        self.currentWeather = getCurrentWeather()
+        
+        guard let temp = interactor.weatherData?.current.temp, let high = interactor.weatherData?.daily?.first?.temp.max, let low = interactor.weatherData?.daily?.first?.temp.min, let sky = interactor.weatherData?.current.weather.first?.description.capitalized, let name = interactor.geocodingData?.first?.name else { return }
+        self.temperature = "\(interactor.convertKToF(temp))°"
+        self.highLowTemp = "H:\(interactor.convertKToF(high))°\tL:\(interactor.convertKToF(low))°"
+        self.sky = sky
+        self.locationName = name
     }
     
-    func getCurrentWeather() -> CurrentWeather {
-        guard let weatherData = interactor.weatherData, let high = interactor.weatherData?.daily?.first?.temp.max, let low = interactor.weatherData?.daily?.first?.temp.min else { return CurrentWeather(location: "Not Available", temperature: "N/A", sky: "N/A", highLowTemp: "H:°\tL:°") }
-        
-        return CurrentWeather(location: "", temperature: "\(interactor.convertKToF(weatherData.current.temp))°", sky: weatherData.current.weather.description, highLowTemp: "H:\(interactor.convertKToF(high))°\tL:\(interactor.convertKToF(low))°")
-    }
+
 }
