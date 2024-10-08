@@ -75,3 +75,11 @@ enum Language: String {
     case Vietnamese = "vi"
     case Zulu = "zu"
 }
+
+// MARK: GeocodingApiType
+enum GeocodingType {
+    case direct
+    case reverse
+    case zipPostal
+}
+
