@@ -5,6 +5,7 @@
 //  Created by Jonah Pickett on 10/3/24.
 //
 
+// MARK: Background Images
 enum SkyImage: String {
     case clear = "clear-sky"
     case cloudy = "cloudy-sky"

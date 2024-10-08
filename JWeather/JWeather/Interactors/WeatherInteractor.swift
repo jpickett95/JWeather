@@ -27,7 +27,7 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
             try await getWeatherData()
             guard let lat = weatherData?.lat, let long = weatherData?.lon else { return }
             try await getGeocodingData(geocodingType: .reverse, state: nil, limit: 1, zip: nil, lat: String(lat), long: String(long))
-            print(weatherData ?? "No weather data")
+            //print(weatherData ?? "No weather data")
         }
     }
     
@@ -81,10 +81,10 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
         }
     }
     
+    @MainActor
     func getGeocodingData(geocodingType: GeocodingType, state: String?, limit: Int?, zip: String?, lat: String?, long: String?) async throws {
         do {
             let url = try createGeocodingApiString(type: geocodingType, state: state, limit: limit, zip: zip, lat: lat, long: long)
-            print(url)
             
             switch geocodingType {
             case .direct, .reverse:
@@ -95,9 +95,7 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
                 self.zipGeocodingData = result
             }
         } catch {
-            print(error)
             throw error
-
         }
     }
         
