@@ -7,7 +7,24 @@
 
 import Foundation
 
+// MARK: Wind Content Block Presenter
+
+
+
+// MARK: - - Protocols
+protocol WindContentBlockPresenterPresentable {
+    var degrees: Int? { get set }
+    var windSpeed: Double? { get set }
+    var windGusts: Double? { get set }
+    
+    func switchDegreesToDirection(_ degrees: Double) -> String
+}
+
+// MARK: - - Presenter
 class WindContentBlockPresenter: ObservableObject {
+    
+    
+    // MARK: - -- Properties
     private var interactor: WeatherInteractor
     let iconImage = "wind"
     let title = "WIND"
@@ -15,6 +32,7 @@ class WindContentBlockPresenter: ObservableObject {
     @Published var windSpeed: Double?
     @Published var windGusts: Double?
     
+    // MARK: - -- Lifecycle
     init(interactor: WeatherInteractor) {
         self.interactor = interactor
         self.degrees = interactor.weatherData?.current.windDeg
@@ -22,6 +40,16 @@ class WindContentBlockPresenter: ObservableObject {
         self.windGusts = interactor.weatherData?.current.windGust
     }
     
+    // MARK: - -- Methods
+    
+    /**
+    A function that returns the true direction as a String based off the given degrees input parameter.
+     
+     - Parameters:
+        - degrees: A Double value containing the direction in degrees.
+     
+     - Returns: A String value containing the true direction (i.e. N, NE, N/NE)
+     */
     func switchDegreesToDirection(_ degrees: Double) -> String {
         switch(degrees) {
         case (348.76...360):

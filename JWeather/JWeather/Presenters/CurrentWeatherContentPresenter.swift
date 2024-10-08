@@ -7,13 +7,30 @@
 
 import Foundation
 
+// MARK: Current Weather Content Presenter
+
+
+
+// MARK: - - Protocols
+protocol CurrentWeatherContentPresentable {
+    var locationName: String? { get }
+    var temperature: String? { get }
+    var highLowTemp: String? { get }
+    var sky: String? { get }
+}
+
+// MARK: - - Presenter
 class CurrentWeatherContentPresenter: ObservableObject {
+    
+    
+    // MARK: - -- Properties
     private let interactor: WeatherInteractor
     @Published var locationName: String?
     @Published var temperature: String?
     @Published var highLowTemp: String?
     @Published var sky: String?
     
+    // MARK: - -- Lifecycle
     init(interactor: WeatherInteractor) {
         self.interactor = interactor
         
@@ -23,6 +40,4 @@ class CurrentWeatherContentPresenter: ObservableObject {
         self.sky = sky
         self.locationName = name
     }
-    
-
 }

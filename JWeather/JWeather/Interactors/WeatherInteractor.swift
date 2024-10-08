@@ -13,6 +13,10 @@ import Foundation
 
 // MARK: - - Protocols
 protocol WeatherInteractorActions {
+    var weatherData: ApiResponse? { get }
+    var geocodingData: [GeocodingApiResponse]? { get }
+    var zipGeocodingData: ZipGeocodingApiResponse? { get }
+    
     func getWeatherData() async throws
     func getGeocodingData(geocodingType: GeocodingType, stateOrCity: String?, limit: Int?, zip: String?, lat: String?, long: String?) async throws
     func convertKToF(_ kelvin: Float) -> Int

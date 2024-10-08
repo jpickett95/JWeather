@@ -7,19 +7,47 @@
 
 import Foundation
 
+// MARK: Content Block Presenter
+
+
+
+// MARK: - - Protocols
+protocol ContentBlockPresentable {
+    var iconString: ContentIcon { get }
+    var title: ContentTitle { get }
+    var content: String? { get }
+    var description: String? { get }
+    
+    func switchContent() -> String
+    func switchDescription() -> String
+    func switchVisibilityDescription(_ visibility: Double) -> String
+}
+
+// MARK: - - Presenter
 class ContentBlockPresenter: ObservableObject {
+    
+    
+    // MARK: - -- Properties
     private var interactor: WeatherInteractor
     let iconString: ContentIcon
     let title: ContentTitle
     var content: String?
     var description: String?
     
+    // MARK: - -- Lifecycle
     init(interactor: WeatherInteractor, iconString: ContentIcon, title: ContentTitle) {
         self.interactor = interactor
         self.iconString = iconString
         self.title = title
     }
     
+    // MARK: - -- Methods
+    
+    /**
+     A function that returns the content value as a String, depending on the presenter's title case.
+     
+     - Returns: A String value containing the formatted content for the view, based on the title case.
+     */
     func switchContent() -> String {
         switch (title) {
         case .sunset:
@@ -47,6 +75,11 @@ class ContentBlockPresenter: ObservableObject {
         }
     }
     
+    /**
+     A function that returns the content description value as a String, depending on the presenter's title case.
+     
+     - Returns: A String value containing the formatted content description for the view, based on the title case.
+     */
     func switchDescription() -> String {
         switch (title) {
         case .sunset:
@@ -78,6 +111,14 @@ class ContentBlockPresenter: ObservableObject {
         }
     }
     
+    /**
+     A function that returns the visibility description value as a String, depending on the given visibility value input.
+     
+     - Parameters:
+        - visibility: A Double value representing the visibility data.
+     
+     - Returns: A String value containing the formatted visibility description for the view, based on the given visibility value.
+     */
     func switchVisibilityDescription(_ visibility: Double) -> String {
         switch(visibility) {
         case (0...0.340909):
