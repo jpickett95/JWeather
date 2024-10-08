@@ -15,6 +15,7 @@ import Foundation
 protocol Networking {
     func getData(urlPath: String) async throws -> Data
     func get<Model: Decodable>(urlPath: String, modelType: Model.Type) async throws -> Model
+        
 }
 
 // MARK: - - Service
@@ -40,7 +41,7 @@ public struct NetworkService: Networking {
     public func getData(urlPath: String) async throws -> Data {
         
         guard let url = URL(string: urlPath) else {
-            throw NetworkingErrors.invalidUrl("The url path entered is not valid.")
+            throw NetworkingError.invalidUrl("The url path entered is not valid.")
         }
         
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -69,7 +70,7 @@ public struct NetworkService: Networking {
     }
     
     /**
-     An asynchronous, function that requests data from the given Endpoint input parameter, and makes an api call.
+     An asynchronous function that requests data from the given Endpoint input parameter, and makes an api call.
           
      - Parameters:
         - endpoint: An Endpoint object value containing the url components.
@@ -90,11 +91,11 @@ public struct NetworkService: Networking {
             }
             urlComponents?.queryItems = queryItems
         default:
-            throw NetworkingErrors.unknown("Failed to switch on endpoint method. Use .get instead.")
+            throw NetworkingError.unknown("Failed to switch on endpoint method. Use .get instead.")
         }
         
         guard let url = urlComponents?.url else {
-            throw NetworkingErrors.invalidUrl("Failed to construct url with URLComponents.")
+            throw NetworkingError.invalidUrl("Failed to construct url with URLComponents.")
         }
         
         var request = URLRequest(url: url)
