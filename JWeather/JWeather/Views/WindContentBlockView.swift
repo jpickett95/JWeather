@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct WindContentBlockView: View {
-    @EnvironmentObject private var interactor: WeatherInteractor
+    // MARK: Properties
     private let presenter: WindContentBlockPresenter
     private let dimension = UIScreen.screenWidth - 40
     
+    // MARK: Lifecycle
     init(presenter: WindContentBlockPresenter) {
         self.presenter = presenter
     }
@@ -101,5 +102,5 @@ struct WindContentBlockView: View {
 }
 
 #Preview {
-    WindContentBlockView(presenter: WindContentBlockPresenter(interactor: WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))).environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
+    WindContentBlockView(presenter: WindContentBlockPresenter(interactor: WeatherInteractor(networkService: NetworkService(), locationService: LocationService())))
 }

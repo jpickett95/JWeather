@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct CurrentWeatherContentView: View {
+    // MARK: Properties
     private let presenter: CurrentWeatherContentPresenter
     
+    
+    // MARK: Lifecycle
     init(presenter: CurrentWeatherContentPresenter) {
         self.presenter = presenter
     }

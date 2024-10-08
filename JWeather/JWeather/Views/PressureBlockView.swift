@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct PressureBlockView: View {
+    // MARK: Properties
     private let presenter: PressureContentBlockPresenter
     private let dimension = UIScreen.screenWidth / 2 - 30
 
+    // MARK: Lifecycle
     init(presenter: PressureContentBlockPresenter) {
         self.presenter = presenter
     }
@@ -34,6 +36,7 @@ struct PressureBlockView: View {
             
                 
                 ZStack{
+                    // MARK: Content Image
                     Image(systemName: "tirepressure")
                         .foregroundStyle(.white.opacity(0.6))
                         .font(.system(size: 100))

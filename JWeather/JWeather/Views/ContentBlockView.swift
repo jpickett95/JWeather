@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentBlockView: View {
+    // MARK: Properties
     private let presenter: ContentBlockPresenter
     private let dimension = UIScreen.screenWidth / 2 - 30
     
+    // MARK: Lifecycle
     init(presenter: ContentBlockPresenter) {
         self.presenter = presenter
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct JWeatherApp: App {
+    // MARK: Properties
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {

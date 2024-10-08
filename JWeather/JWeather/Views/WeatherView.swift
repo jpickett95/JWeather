@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WeatherView: View {
+    // MARK: Properties
     @EnvironmentObject private var interactor: WeatherInteractor
     
     var body: some View {
@@ -53,10 +54,6 @@ struct WeatherView: View {
             }
             
         }
-    }
-    
-    func currentWeatherView() -> some View {
-        Text("Yas!")
     }
 }
 
