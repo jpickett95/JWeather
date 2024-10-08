@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct WeatherView: View {
-    private let interactor: WeatherInteractor
-    
-    init(interactor: WeatherInteractor) {
-        self.interactor = interactor
-    }
+    @EnvironmentObject private var interactor: WeatherInteractor
     
     var body: some View {
         ZStack{
@@ -25,27 +21,36 @@ struct WeatherView: View {
             VStack(spacing: 15) {
                 // MARK: Current Weather
                 CurrentWeatherContentView(presenter: CurrentWeatherContentPresenter(interactor: interactor))
-
-                HStack(spacing: 15) {
-                    // MARK: Sunset
-                    ContentBlockView()
-                    
-                    
-                    // MARK: Feels Like
-                    ContentBlockView()
-                }
                 
-                HStack(spacing: 15) {
-                    // MARK: Precipitation
-                    ContentBlockView()
+                ScrollView {
+                    // MARK: Wind
+                    WindContentBlockView(presenter: WindContentBlockPresenter(interactor: interactor))
                     
+                    HStack(spacing: 15) {
+                        // MARK: Sunset
+                        ContentBlockView(presenter: ContentBlockPresenter(interactor: interactor, iconString: ContentIcon.sunset, title: ContentTitle.sunset))
+                        
+                        // MARK: Feels Like
+                        ContentBlockView(presenter: ContentBlockPresenter(interactor: interactor, iconString: ContentIcon.feelsLike, title: ContentTitle.feelsLike))
+                    }
                     
-                    // MARK: Visbility
-                    ContentBlockView()
+                    HStack(spacing: 15) {
+                        // MARK: Precipitation
+                        ContentBlockView(presenter: ContentBlockPresenter(interactor: interactor, iconString: ContentIcon.precipitation, title: ContentTitle.precipitation))
+                        
+                        // MARK: Visbility
+                        ContentBlockView(presenter: ContentBlockPresenter(interactor: interactor, iconString: ContentIcon.visibility, title: ContentTitle.visibility))
+                    }
+                    
+                    HStack(spacing: 15) {
+                        // MARK: Humidity
+                        ContentBlockView(presenter: ContentBlockPresenter(interactor: interactor, iconString: ContentIcon.humidity, title: ContentTitle.humidity))
+                        
+                        // MARK: Pressure
+                        PressureBlockView(presenter: PressureContentBlockPresenter(interactor: interactor))
+                    }
                 }
-                
             }
-            
             
         }
     }
@@ -56,5 +61,5 @@ struct WeatherView: View {
 }
 
 #Preview {
-    WeatherView(interactor: WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
+    WeatherView().environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }
