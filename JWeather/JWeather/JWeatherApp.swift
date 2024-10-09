@@ -14,11 +14,11 @@ struct JWeatherApp: App {
 
     var body: some Scene {
         WindowGroup {
-            //ContentView()
+            ContentView()
             //    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             
-            WeatherView()
-                .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
+           // WeatherView()
+           //     .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
  
         }
     }
