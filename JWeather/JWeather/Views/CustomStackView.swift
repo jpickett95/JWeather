@@ -48,7 +48,7 @@ struct CustomStackView<Title: View, Content: View>: View {
                 .background(.blue.opacity(0.3))
                 .background(.ultraThinMaterial, in: CustomCorner(corners: [.bottomLeft, .bottomRight], radius: 12))
                 // Moving content upwards
-                .offset(y: topOffset >= 120 ? 0 : -(-topOffset + 120))
+                .offset(y: topOffset >= 140 ? 0 : -(-topOffset + 150))
                 .zIndex(0)
                 // Clipping to avoid background overlay
                 .clipped()
@@ -58,8 +58,8 @@ struct CustomStackView<Title: View, Content: View>: View {
             .colorScheme(.dark)
             .cornerRadius(12)
             .opacity(getOpacity())
-            // Stopping view at 120
-            .offset(y: topOffset >= 120 ? 0 : -topOffset + 120)
+            // Stopping view at 140
+            .offset(y: topOffset >= 140 ? 0 : -topOffset + 140)
             .background(
                 GeometryReader { proxy -> Color in
                     let minY = proxy.frame(in: .global).minY
@@ -68,7 +68,7 @@ struct CustomStackView<Title: View, Content: View>: View {
                     
                     DispatchQueue.main.async {
                         self.topOffset = minY
-                        self.bottomOffset = maxY - 120
+                        self.bottomOffset = maxY - 140
                     }
                     
                     return Color.clear
@@ -90,19 +90,7 @@ struct CustomStackView<Title: View, Content: View>: View {
     }
 }
 
-// MARK: View Modifers
-struct CornerModifier: ViewModifier {
-    @Binding var bottomOffset: CGFloat
-    
-    func body(content: Content) -> some View {
-        
-        if bottomOffset < 38 {
-            content
-        } else {
-            content.cornerRadius(12)
-        }
-    }
-}
+
 
 #Preview {
     ContentView()
