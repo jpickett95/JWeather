@@ -1,44 +1,45 @@
 //
-//  CurrentWeatherPresenter.swift
+//  HomePresenter.swift
 //  JWeather
 //
-//  Created by Jonah Pickett on 10/10/24.
+//  Created by Jonah Pickett on 10/9/24.
 //
 
 import Foundation
 
-// MARK: Current Weather Presenter
+// MARK: Weather Presenter
 
 
 
 // MARK: - - Protocols
-protocol CurrentWeatherPresentable {
+protocol WeatherPresentable {
+    var topEdge: CGFloat { get }
+    var interactor: WeatherInteractorActions { get }
     var locationName: String? { get }
     var temperature: String? { get }
     var highLowTemp: String? { get }
     var sky: String? { get }
-    var isMain: Bool { get }
     
     func getTitleOpacity(_ offset: CGFloat) -> CGFloat
     func getTitleOffset(_ offset: CGFloat) -> CGFloat
 }
 
 // MARK: - - Presenter
-class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
+class WeatherPresenter: ObservableObject, WeatherPresentable {
     
     
     // MARK: - -- Properties
-    private let interactor: WeatherInteractorActions
-    let isMain: Bool
+    var interactor: WeatherInteractorActions
+    var topEdge: CGFloat
     @Published var locationName: String?
     @Published var temperature: String?
     @Published var highLowTemp: String?
     @Published var sky: String?
     
     // MARK: - -- Lifecycle
-    init(interactor: WeatherInteractorActions, isMain: Bool) {
+    init(interactor: WeatherInteractor, topEdge: CGFloat) {
         self.interactor = interactor
-        self.isMain = isMain
+        self.topEdge = topEdge
         
         guard let temperature = interactor.weatherData?.current.temp, let high = interactor.weatherData?.daily?.first?.temp.max, let low = interactor.weatherData?.daily?.first?.temp.min, let sky = interactor.weatherData?.current.weather.first?.description.capitalized, let name = interactor.geocodingData?.first?.name else { return }
         self.temperature = " \(interactor.convertKToF(temperature))°"
@@ -72,4 +73,5 @@ class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
         
         return 0
     }
+    
 }

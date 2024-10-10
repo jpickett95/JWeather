@@ -28,6 +28,7 @@ struct CustomStackView<Title: View, Content: View>: View {
                 
                 titleView
                     .font(.callout)
+                    .foregroundStyle(.white.opacity(0.6))
                     .lineLimit(1)
                     .frame(height: 38)  // Max height
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -94,6 +95,7 @@ struct CustomStackView<Title: View, Content: View>: View {
 
 #Preview {
     ContentView()
+        .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }
 
 
