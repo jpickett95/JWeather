@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @EnvironmentObject private var interactor: WeatherInteractor
 //    @Environment(\.managedObjectContext) private var viewContext
 //
 //    @FetchRequest(
@@ -23,7 +24,7 @@ struct ContentView: View {
             
             let topEdge = proxy.safeAreaInsets.top
             
-            HomeView(topEdge: topEdge)
+            HomeView(presenter: HomePresenter(interactor: interactor, topEdge: topEdge))
                 .ignoresSafeArea(.all, edges: .top)
         }
 
@@ -69,5 +70,7 @@ struct ContentView: View {
 //}()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }

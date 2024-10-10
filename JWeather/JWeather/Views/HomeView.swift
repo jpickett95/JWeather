@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    private let presenter: any HomePresentable
     @State var offset: CGFloat = 0
-    var topEdge: CGFloat
+    
+    init(presenter: HomePresentable) {
+        self.presenter = presenter
+    }
     
     var body: some View {
         ZStack {
@@ -30,37 +34,11 @@ struct HomeView: View {
                 VStack {
                     
                     // Current Weather Data
-                    VStack(alignment: .center, spacing: 5) {
-                        
-                        Text("My Location")
-                            .font(.system(size: 35))
-                            .foregroundStyle(.white)
-                            .shadow(radius: 5)
-                        
-                        Text(" 98°")
-                            .font(.system(size: 75, weight: .thin))
-                            .foregroundStyle(.white)
-                            .shadow(radius: 5)
-                            .opacity(getTitleOpacity())
-                        
-                        Text("Clear")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundStyle(.white)
-                            .shadow(radius: 5)
-                            .opacity(getTitleOpacity())
-                        
-                        
-                        Text("H:100°  L:95°")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundStyle(.white)
-                            .shadow(radius: 5)
-                            .opacity(getTitleOpacity())
-                        
-                    }
+                    CurrentWeatherView(presenter: CurrentWeatherPresenter(interactor: presenter.interactor, isMain: true), offset: $offset)
                     .offset(y: -offset)
                     // For bottom drag effect
                     .offset(y: offset > 0 ? (offset / UIScreen.main.bounds.width) * 100 : 0)
-                    .offset(y: getTitleOffset())
+                    .offset(y: presenter.getTitleOffset(offset))
                     
                     // Custom Data Views
                     VStack(spacing: 10) {
@@ -101,8 +79,8 @@ struct HomeView: View {
                         }
                     }
                 }
-                .padding(.top, 25)
-                .padding(.top, topEdge)
+                .padding(.top, 40)
+                .padding(.top, presenter.topEdge)
                 .padding([.horizontal, .bottom])
                 // Getting offset
                 .overlay(
@@ -112,7 +90,7 @@ struct HomeView: View {
                         let minY = proxy.frame(in: .global).minY
                         
                         DispatchQueue.main.async {
-                            self.offset = minY
+                            offset = minY
                         }
                         
                         return Color.clear
@@ -123,34 +101,14 @@ struct HomeView: View {
         }
     }
     
-    func getTitleOpacity() -> CGFloat {
-        let titleOffet = -getTitleOffset()
-        
-        let progress = titleOffet / 20
-        
-        let opacity = 1 - progress
-        
-        return opacity
-    }
     
-    func getTitleOffset() -> CGFloat {
-        // Setting one max height for whole title
-        // Consider max as 120
-        if offset < 0 {
-            let progress = -offset / 120
-            
-            // Since top padding is 25
-            let newOffset = (progress <= 1.0 ? progress : 1) * 20
-            
-            return -newOffset
-        }
-        
-        return 0
-    }
+    
+   
 }
 
 #Preview {
     ContentView()
+        .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }
 
 struct ForecastView: View {
