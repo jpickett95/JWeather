@@ -15,12 +15,6 @@ struct ApiResponse: Decodable {
     let hourly: [Current]?
     let daily: [Daily]?
     let alerts: [WeatherAlert]?
-    
-//    enum CodingKeys: String, CodingKey {
-//        case lat, lon, timezone
-//        case timezoneOffset = "timezone_offset"
-//        case current, daily, minutely, hourly, alerts
-//    }
 }
 
 struct Current: Decodable, Hashable {
@@ -42,18 +36,6 @@ struct Current: Decodable, Hashable {
     let snow: Snow?
     let weather: [Weather]
     let pop: Float?
-    
-//    enum CodingKeys: String, CodingKey {
-//        case dt, sunrise, sunset, temp
-//        case feelsLike = "feels_like"
-//        case pressure, humidity
-//        case dewPoint = "dew_point"
-//        case uvi, clouds, visibility
-//        case windSpeed = "wind_speed"
-//        case windDeg = "wind_deg"
-//        case windGust = "wind_gust"
-//        case rain, snow, weather, pop
-//    }
 }
 
 struct Weather: Decodable, Hashable {
@@ -106,19 +88,6 @@ struct Daily: Decodable, Hashable {
     let rain: Float?
     let snow: Float?
     let uvi: Float
-    
-//    enum CodingKeys: String, CodingKey {
-//        case dt, sunrise, sunset, moonrise, moonset
-//        case moonPhase = "moon_phase"
-//        case summary, temp
-//        case feelsLike = "feels_like"
-//        case pressure, humidity
-//        case dewPoint = "dew_point"
-//        case windSpeed = "wind_speed"
-//        case windDeg = "wind_deg"
-//        case windGust = "wind_gust"
-//        case weather, clouds, pop, rain, snow, uvi
-//    }
 }
 
 struct Temp: Decodable, Hashable {
@@ -144,11 +113,6 @@ struct WeatherAlert: Decodable {
     let end: Double
     let description: String
     let tags: [String]
-    
-//    enum CodingKeys: String, CodingKey {
-//        case senderName = "sender_name"
-//        case event, start, end, description, tags
-//    }
 }
 
 struct GeocodingApiResponse: Decodable {
