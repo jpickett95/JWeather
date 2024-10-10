@@ -24,7 +24,7 @@ struct ContentView: View {
             
             let topEdge = proxy.safeAreaInsets.top
             
-            WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge))
+            WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: true)
                 .ignoresSafeArea(.all, edges: .top)
         }
     }

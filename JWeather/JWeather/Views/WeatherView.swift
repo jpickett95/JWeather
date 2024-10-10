@@ -10,11 +10,13 @@ import SwiftUI
 struct WeatherView: View {
     // MARK: Properties
     private let presenter: WeatherPresentable
+    private let isMain: Bool
     @State var offset: CGFloat = 0
     
     // MARK: Lifecycle
-    init(presenter: WeatherPresentable) {
+    init(presenter: WeatherPresentable, isMain: Bool) {
         self.presenter = presenter
+        self.isMain = isMain
     }
     
     var body: some View {
@@ -36,7 +38,7 @@ struct WeatherView: View {
                 VStack {
                     
                     // MARK: Current Weather
-                    CurrentWeatherView(presenter: CurrentWeatherPresenter(interactor: presenter.interactor, isMain: true), offset: $offset)
+                    CurrentWeatherView(presenter: CurrentWeatherPresenter(interactor: presenter.interactor, isMain: isMain), offset: $offset)
                     .offset(y: -offset)
                     // For bottom drag effect
                     .offset(y: offset > 0 ? (offset / UIScreen.main.bounds.width) * 100 : 0)
