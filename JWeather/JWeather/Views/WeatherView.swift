@@ -49,6 +49,10 @@ struct WeatherView: View {
                         HourlyForecastView(presenter: HourlyForecastPresenter(interactor: presenter.interactor))
                         
                         
+                        // MARK: Daily Forecast
+                        DailyForecastView(presenter: DailyForecastPresenter(interactor: presenter.interactor))
+                        
+                        
                         // MARK: Wind
                         WindView(presenter: WindPresenter(interactor: presenter.interactor))
                         

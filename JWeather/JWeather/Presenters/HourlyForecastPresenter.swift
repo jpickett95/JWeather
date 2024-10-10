@@ -11,6 +11,7 @@ import Foundation
 
 protocol HourlyForecastPresentable {
     var hourlyForecast: [Current] { get }
+    
     func getTime(_ dt: Double) -> String
     func getTemp(_ kelvin: Float) -> Int
     func getIcon(_ forecast: Current) -> String

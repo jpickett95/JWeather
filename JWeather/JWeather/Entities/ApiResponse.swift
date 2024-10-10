@@ -84,7 +84,7 @@ struct Minutely: Decodable {
     let precipitation: Int?
 }
 
-struct Daily: Decodable {
+struct Daily: Decodable, Hashable {
     let dt: Double
     let sunrise: Double
     let sunset: Double
@@ -121,7 +121,7 @@ struct Daily: Decodable {
 //    }
 }
 
-struct Temp: Decodable {
+struct Temp: Decodable, Hashable {
     let day: Float
     let min: Float
     let max: Float
@@ -130,7 +130,7 @@ struct Temp: Decodable {
     let morn: Float
 }
 
-struct FeelsLike: Decodable {
+struct FeelsLike: Decodable, Hashable {
     let day: Float
     let night: Float
     let eve: Float
