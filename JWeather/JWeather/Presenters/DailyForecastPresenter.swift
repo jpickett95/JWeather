@@ -16,7 +16,7 @@ protocol DailyForecastPresentable {
     var dailyForecast: [Daily] { get }
     
     func getWeekday(_ dt: Double) -> String
-    func getTemp(_ kelvin: Float) -> Float
+    func getTempF(_ kelvin: Float) -> Float
 }
 
 // MARK: - - Presenter
@@ -48,7 +48,7 @@ class DailyForecastPresenter: ObservableObject, DailyForecastPresentable {
         return formatter.string(from: Date(timeIntervalSince1970: dt))
     }
     
-    func getTemp(_ kelvin: Float) -> Float {
+    func getTempF(_ kelvin: Float) -> Float {
         return (kelvin - 273.15) * 9/5 + 32
     }
 }

@@ -28,7 +28,7 @@ struct DailyForecastView: View {
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(presenter.dailyForecast, id: \.self) { forecast in
                     VStack {
-                        DailyForecastViewCell(day: presenter.getWeekday(forecast.dt), image: "sun.max", minTemp: presenter.getTemp(forecast.temp.min), maxTemp: presenter.getTemp(forecast.temp.max))
+                        DailyForecastViewCell(day: presenter.getWeekday(forecast.dt), image: "sun.max", minTemp: presenter.getTempF(forecast.temp.min), maxTemp: presenter.getTempF(forecast.temp.max))
                         
                         Divider()
                             .overlay(.white)
