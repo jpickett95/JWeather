@@ -16,11 +16,6 @@ struct JWeatherApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
-
-            //    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            
-           // WeatherView()
- 
         }
     }
 }
