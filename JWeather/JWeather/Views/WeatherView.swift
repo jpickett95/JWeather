@@ -44,32 +44,10 @@ struct WeatherView: View {
                     
                     // Custom Data Views
                     VStack(spacing: 10) {
+                                                
+                        // MARK: Hourly Forecast
+                        HourlyForecastView(presenter: HourlyForecastPresenter(interactor: presenter.interactor))
                         
-                        // Custom Stack Views
-                        
-                        CustomStackView {
-                            // Label here:
-                            Label {
-                                Text("Hourly Forecast")
-                            } icon: {
-                                Image(systemName: "clock")
-                            }
-                            
-                        } contentView: {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                
-                                HStack(spacing: 15) {
-                                    ForecastView(time: "Now", temp: 93, image: "cloud.bolt")
-                                    ForecastView(time: "12PM", temp: 94, image: "sun.max")
-                                    ForecastView(time: "1PM", temp: 95, image: "sun.min")
-                                    ForecastView(time: "2PM", temp: 96, image: "sun.haze")
-                                    ForecastView(time: "3PM", temp: 97, image: "cloud.sun")
-                                    ForecastView(time: "4PM", temp: 98, image: "cloud")
-                                    ForecastView(time: "5PM", temp: 99, image: "cloud.rain")
-                                    ForecastView(time: "6PM", temp: 100, image: "cloud.fog")
-                                }
-                            }
-                        }
                         
                         // MARK: Wind
                         WindView(presenter: WindPresenter(interactor: presenter.interactor))
@@ -77,6 +55,7 @@ struct WeatherView: View {
                         HStack(spacing: 10) {
                             // MARK: Sunset
                             WeatherDataView(presenter: WeatherDataPresenter(interactor: presenter.interactor, icon: ContentIcon.sunset, title: ContentTitle.sunset))
+                            
                             
                             // MARK: Feels Like
                             WeatherDataView(presenter: WeatherDataPresenter(interactor: presenter.interactor, icon: ContentIcon.feelsLike, title: ContentTitle.feelsLike))
@@ -87,6 +66,7 @@ struct WeatherView: View {
                             // MARK: Precipitation
                             WeatherDataView(presenter: WeatherDataPresenter(interactor: presenter.interactor, icon: ContentIcon.precipitation, title: ContentTitle.precipitation))
                             
+                            
                             // MARK: Visibility
                             WeatherDataView(presenter: WeatherDataPresenter(interactor: presenter.interactor, icon: ContentIcon.visibility, title: ContentTitle.visibility))
                         }.frame(maxHeight: .infinity)
@@ -94,6 +74,7 @@ struct WeatherView: View {
                         HStack(spacing: 10) {
                             // MARK: Humidity
                             WeatherDataView(presenter: WeatherDataPresenter(interactor: presenter.interactor, icon: ContentIcon.humidity, title: ContentTitle.humidity))
+                            
                             
                             // MARK: Pressure
                             PressureView(presenter: PressurePresenter(interactor: presenter.interactor))
@@ -131,32 +112,4 @@ struct WeatherView: View {
 #Preview {
     ContentView()
         .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
-}
-
-struct ForecastView: View {
-    var time: String
-    var temp: CGFloat
-    var image: String
-    
-    var body: some View {
-        VStack(spacing: 15) {
-            Text(time)
-                .font(.callout.bold())
-                .foregroundStyle(.white)
-            
-            Image(systemName: image)
-                .font(.title2)
-            // Multicolor
-                .symbolVariant(.fill)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(.yellow, .white)
-            // Max frame
-                .frame(height: 30)
-            
-            Text("\(Int(temp))°")
-                .font(.callout.bold())
-                .foregroundStyle(.white)
-        }
-        .padding(.horizontal, 10)
-    }
 }

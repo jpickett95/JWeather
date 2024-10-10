@@ -23,7 +23,7 @@ struct ApiResponse: Decodable {
 //    }
 }
 
-struct Current: Decodable {
+struct Current: Decodable, Hashable {
     let dt: Double
     let sunrise: Double?
     let sunset: Double?
@@ -56,14 +56,14 @@ struct Current: Decodable {
 //    }
 }
 
-struct Weather: Decodable {
+struct Weather: Decodable, Hashable {
     let id: Int
     let main: String
     let description: String
     let icon: String
 }
 
-struct Rain: Decodable {
+struct Rain: Decodable, Hashable {
     let oneH: Double
     
     enum CodingKeys: String, CodingKey {
@@ -71,7 +71,7 @@ struct Rain: Decodable {
     }
 }
 
-struct Snow: Decodable {
+struct Snow: Decodable, Hashable {
     let oneH: Double
     
     enum CodingKeys: String, CodingKey {

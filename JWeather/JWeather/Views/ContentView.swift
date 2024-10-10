@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @EnvironmentObject private var interactor: WeatherInteractor
+    @EnvironmentObject  var interactor : WeatherInteractor
 //    @Environment(\.managedObjectContext) private var viewContext
 //
 //    @FetchRequest(
@@ -27,7 +27,6 @@ struct ContentView: View {
             WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge))
                 .ignoresSafeArea(.all, edges: .top)
         }
-
     }
 
 //    private func addItem() {
