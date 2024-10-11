@@ -33,7 +33,6 @@ struct WeatherView: View {
             
             // MARK: Main View
             ScrollView(.vertical, showsIndicators: false) {
-                
                 VStack {
                     
                     // MARK: Current Weather
@@ -106,12 +105,16 @@ struct WeatherView: View {
                     }
                 )
             }
+        }.task {
+            do {
+                try await presenter.interactor.getWeatherData(lat: nil, long: nil)
+                guard let lat = presenter.interactor.weatherData?.lat, let long = presenter.interactor.weatherData?.lon else { return }
+                try await presenter.interactor.getGeocodingData(geocodingType: .reverse, stateOrCity: nil, limit: 1, zip: nil, lat: String(lat), long: String(long))
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
-    
-    
-    
-   
 }
 
 #Preview {

@@ -18,6 +18,7 @@ protocol CurrentWeatherPresentable {
     var highLowTemp: String? { get }
     var sky: String? { get }
     var isMain: Bool { get }
+    var interactor: WeatherInteractorActions { get }
     
     func getTitleOpacity(_ offset: CGFloat) -> CGFloat
     func getTitleOffset(_ offset: CGFloat) -> CGFloat
@@ -28,7 +29,7 @@ class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
     
     
     // MARK: - -- Properties
-    private let interactor: WeatherInteractorActions
+    let interactor: WeatherInteractorActions
     let isMain: Bool
     @Published var locationName: String?
     @Published var temperature: String?

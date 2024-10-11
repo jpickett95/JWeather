@@ -18,15 +18,36 @@ struct ContentView: View {
 //    private var items: FetchedResults<Item>
 
     var body: some View {
-        
-        // Getting safe area using Geometry Reader
-        GeometryReader { proxy in
+        TabView {
             
-            let topEdge = proxy.safeAreaInsets.top
+            Tab("Main", systemImage: "location.fill") {
+                // Getting safe area using Geometry Reader
+                GeometryReader { proxy in
+                    
+                    let topEdge = proxy.safeAreaInsets.top
+                    
+                    WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: true)
+                        .ignoresSafeArea(.all, edges: .top)
+                    
+                    
+                }
+            }
             
-            WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: true)
-                .ignoresSafeArea(.all, edges: .top)
+            Tab() {
+                GeometryReader { proxy in
+                    
+                    let topEdge = proxy.safeAreaInsets.top
+                    
+                    WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: false)
+                        .ignoresSafeArea(.all, edges: .top)
+                    
+                    
+                }
+                
+            }
         }
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .ignoresSafeArea()
     }
 
 //    private func addItem() {

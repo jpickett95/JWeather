@@ -17,7 +17,7 @@ protocol WeatherInteractorActions {
     var geocodingData: [GeocodingApiResponse]? { get }
     var zipGeocodingData: ZipGeocodingApiResponse? { get }
     
-    func getWeatherData() async throws
+    func getWeatherData(lat: Double?, long: Double?) async throws
     func getGeocodingData(geocodingType: GeocodingType, stateOrCity: String?, limit: Int?, zip: String?, lat: String?, long: String?) async throws
     func convertKToF(_ kelvin: Float) -> Int
     func convertKToC(_ kelvin: Float) -> Int
@@ -43,12 +43,12 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
         self.networkService = networkService
         self.locationService = locationService
         
-        Task {
-            try await getWeatherData()
-            guard let lat = weatherData?.lat, let long = weatherData?.lon else { return }
-            try await getGeocodingData(geocodingType: .reverse, stateOrCity: nil, limit: 1, zip: nil, lat: String(lat), long: String(long))
-            //print(weatherData ?? "No weather data")
-        }
+//        Task {
+//            try await getWeatherData()
+//            guard let lat = weatherData?.lat, let long = weatherData?.lon else { return }
+//            try await getGeocodingData(geocodingType: .reverse, stateOrCity: nil, limit: 1, zip: nil, lat: String(lat), long: String(long))
+//            //print(weatherData ?? "No weather data")
+//        }
     }
     
     // MARK: - -- Methods
@@ -121,9 +121,14 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
      - Throws: An Error if the api call fails or there is a decoding error.
      */
     @MainActor
-    func getWeatherData() async throws {
+    func getWeatherData(lat: Double?, long: Double?) async throws {
         do {
-            let url = createOneCallApiString(lat: locationService.getLatitude(), long: locationService.getLongitude(), exclusions: nil)
+            var url = ""
+            if let lat, let long {
+                url = createOneCallApiString(lat: lat, long: long, exclusions: nil)
+            } else {
+                url = createOneCallApiString(lat: locationService.getLatitude(), long: locationService.getLongitude(), exclusions: nil)
+            }
             print(url)
             weatherData = try await networkService.get(urlPath: url, modelType: ApiResponse.self)
         } catch {

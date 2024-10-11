@@ -19,6 +19,7 @@ protocol WeatherPresentable {
     var temperature: String? { get }
     var highLowTemp: String? { get }
     var sky: String? { get }
+    var searchText: String { get set }
     
     func getTitleOpacity(_ offset: CGFloat) -> CGFloat
     func getTitleOffset(_ offset: CGFloat) -> CGFloat
@@ -35,6 +36,7 @@ class WeatherPresenter: ObservableObject, WeatherPresentable {
     @Published var temperature: String?
     @Published var highLowTemp: String?
     @Published var sky: String?
+    @Published var searchText: String = ""
     
     // MARK: - -- Lifecycle
     init(interactor: WeatherInteractor, topEdge: CGFloat) {
