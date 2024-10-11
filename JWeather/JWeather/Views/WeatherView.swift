@@ -30,7 +30,6 @@ struct WeatherView: View {
                     .frame(width: proxy.size.width, height: proxy.size.height)
             }
             .ignoresSafeArea()
-            //.overlay(.ultraThinMaterial)    // Blur effect
             
             // MARK: Main View
             ScrollView(.vertical, showsIndicators: false) {
