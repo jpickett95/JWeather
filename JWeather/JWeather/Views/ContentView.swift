@@ -8,7 +8,11 @@
 import SwiftUI
 import CoreData
 
+// MARK: Content View
 struct ContentView: View {
+    
+    
+    // MARK: Properties
     @EnvironmentObject  var interactor : WeatherInteractor
 //    @Environment(\.managedObjectContext) private var viewContext
 //
@@ -17,33 +21,31 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Item>
 
+    // MARK: Body
     var body: some View {
         TabView {
             
+            // MARK: Home View
             Tab("Main", systemImage: "location.fill") {
                 // Getting safe area using Geometry Reader
                 GeometryReader { proxy in
-                    
                     let topEdge = proxy.safeAreaInsets.top
-                    
                     WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: true)
                         .ignoresSafeArea(.all, edges: .top)
-                    
-                    
                 }
             }
             
+            // MARK: Subsequent Views
+            
+            
+            
+            // MARK: - - Custom Location View
             Tab() {
                 GeometryReader { proxy in
-                    
                     let topEdge = proxy.safeAreaInsets.top
-                    
                     WeatherView(presenter: WeatherPresenter(interactor: interactor, topEdge: topEdge), isMain: false)
                         .ignoresSafeArea(.all, edges: .top)
-                    
-                    
                 }
-                
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))

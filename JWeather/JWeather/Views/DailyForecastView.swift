@@ -7,16 +7,24 @@
 
 import SwiftUI
 
+// MARK: Daily Forecast View
 struct DailyForecastView: View {
+    
+    
+    // MARK: Properties
     private let presenter: DailyForecastPresentable
     
+    
+    // MARK: Lifecycle
     init(presenter: DailyForecastPresentable) {
         self.presenter = presenter
     }
     
+    // MARK: Body
     var body: some View {
         CustomStackView {
 
+            // MARK: Title & Icon
             Label {
                 Text("\(presenter.dailyForecast.count)-DAY FORECAST")
             } icon: {
@@ -25,6 +33,7 @@ struct DailyForecastView: View {
             
         } contentView: {
             
+            // MARK: Content
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(presenter.dailyForecast, id: \.self) { forecast in
                     VStack {
@@ -41,20 +50,27 @@ struct DailyForecastView: View {
     }
 }
 
+// MARK: Content Cell
 struct DailyForecastViewCell: View {
+    
+    
+    // MARK: Properties
     let day: String
     let image: String
     let minTemp: Float
     let maxTemp: Float
     
+    // MARK: Body
     var body: some View {
         HStack(spacing: 15) {
             
+            // MARK: Weekday
             Text(day)
                 .font(.title3.bold())
                 .foregroundStyle(.white)
                 .frame(width: 60, alignment: .leading)
             
+            // MARK: Image
             Image(systemName: image)
                 .font(.title3)
                 .symbolVariant(.fill)
@@ -62,12 +78,13 @@ struct DailyForecastViewCell: View {
                 .foregroundStyle(switchPrimaryColor(image: image), switchSecondaryColor(image: image))
                 .frame(width: 30)
             
+            // MARK: Min Temperature
             Text("\(Int(minTemp))°")
                 .font(.title3.bold())
                 .foregroundStyle(.secondary)
                 .foregroundStyle(.white)
             
-            // Progress Bar
+            // MARK: Progress Bar
             ZStack(alignment: .leading) {
                 
                 Capsule()
@@ -83,12 +100,28 @@ struct DailyForecastViewCell: View {
             }
             .frame(height: 4)
             
+            // MARK: Max Temperature
             Text("\(Int(maxTemp))°")
                 .font(.title3.bold())
                 .foregroundStyle(.white)
         }
     }
     
+    // MARK: Methods
+    
+    /**
+     A function that returns the primary color, given the view's image property.
+     
+     - Parameters:
+        - image: A String value containing the SF Symbol
+     
+     - Returns: A Color object depending on the given SF Symbol. Will return 'white' as the default case.
+     
+     ### Cases:
+        - sun.max
+        - sunset
+        - sunrise
+     */
     private func switchPrimaryColor(image: String) -> Color {
         switch image {
         case "sun.max":
@@ -100,6 +133,19 @@ struct DailyForecastViewCell: View {
         }
     }
     
+    /**
+     A function that returns the secondary color, given the view's image property.
+     
+     - Parameters:
+        - image: A String value containing the SF Symbol
+     
+     - Returns: A Color object depending on the given SF Symbol. Will return 'white' as the default case.
+     
+     ### Cases:
+        - sun.max
+        - sunset
+        - sunrise
+     */
     private func switchSecondaryColor(image: String) -> Color {
         switch image {
         case "sun.max", "sunset", "sunrise":

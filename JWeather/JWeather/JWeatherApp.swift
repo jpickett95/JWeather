@@ -7,11 +7,15 @@
 
 import SwiftUI
 
+// MARK: App File
 @main
 struct JWeatherApp: App {
+    
     // MARK: Properties
     let persistenceController = PersistenceController.shared
 
+    
+    // MARK: Body
     var body: some Scene {
         WindowGroup {
             ContentView()

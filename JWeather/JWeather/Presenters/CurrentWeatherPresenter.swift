@@ -11,8 +11,11 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol CurrentWeatherPresentable {
+    
+    
+    // MARK: - -- Properties
     var locationName: String? { get }
     var temperature: String? { get }
     var highLowTemp: String? { get }
@@ -20,11 +23,16 @@ protocol CurrentWeatherPresentable {
     var isMain: Bool { get }
     var interactor: WeatherInteractorActions { get }
     
+    // MARK: - -- Methods
     func getTitleOpacity(_ offset: CGFloat) -> CGFloat
     func getTitleOffset(_ offset: CGFloat) -> CGFloat
 }
 
 // MARK: - - Presenter
+
+/**
+ A presenter object that formats data for CurrentWeatherViews.
+ */
 class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
     
     
@@ -49,16 +57,30 @@ class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
     }
     
     // MARK: - -- Methods
+    
+    /**
+     A function that returns the opacity value, given the offset value of the title view. Used to make views disappear when scrolling up on the screen.
+     
+     - Parameters:
+        - offset: A CGFLoat value representing the offset of the title view.
+     
+     - Returns: A CGFloat value representing the opacity.
+     */
     func getTitleOpacity(_ offset: CGFloat) -> CGFloat {
         let titleOffset = -getTitleOffset(offset)
-        
         let progress = titleOffset / 20
-        
         let opacity = 1 - progress
-        
         return opacity
     }
     
+    /**
+     A function that gets the max height of the title view.
+     
+     - Parameters:
+        - offset: A CGFloat value representing the title view's offset.
+     
+     - Returns: A CGFloat value containing the new offset for the title view, considering the desired max height. If the given offset is greater than 0, will return 0.
+     */
     func getTitleOffset(_ offset: CGFloat) -> CGFloat {
         // Setting one max height for whole title
         // Consider max as 140
@@ -67,10 +89,8 @@ class CurrentWeatherPresenter: ObservableObject, CurrentWeatherPresentable {
             
             // Since top padding is 40
             let newOffset = (progress <= 1.0 ? progress : 1) * 40
-            
             return -newOffset
         }
-        
         return 0
     }
 }

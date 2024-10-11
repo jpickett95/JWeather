@@ -11,7 +11,7 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol Networking {
     func getData(urlPath: String) async throws -> Data
     func get<Model: Decodable>(urlPath: String, modelType: Model.Type) async throws -> Model
@@ -19,6 +19,7 @@ protocol Networking {
 }
 
 // MARK: - - Service
+
 /**
  A singleton that manages URL network connections & API calls.
  ### Supports:
@@ -116,7 +117,7 @@ public struct NetworkService: Networking {
 // MARK: - JSON Decoder
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol JSONDecoding {
     func decode<Model: Decodable>(data: Data, modelType: Model.Type) async throws -> Model
 }

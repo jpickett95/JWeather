@@ -7,18 +7,27 @@
 
 import SwiftUI
 
+// MARK: Custom Searchbar View
+
+/**
+ A custom searchbar View.
+ */
 struct CustomSearchBar: View {
+    // MARK: Properties
     private let presenter: CurrentWeatherPresentable
     @State var searchText: String = ""
     @State private var isEditing = false
     
+    // MARK: Lifecycle
     init(presenter: CurrentWeatherPresentable) {
         self.presenter = presenter
     }
 
+    // MARK: Body
     var body: some View {
         HStack {
 
+            // MARK: TextField
             TextField("Atlanta", text: $searchText)
                 .padding(7)
                 .padding(.horizontal, 25)

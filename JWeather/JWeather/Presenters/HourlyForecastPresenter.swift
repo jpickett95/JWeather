@@ -9,9 +9,17 @@ import Foundation
 
 // MARK: Forecast Presenter
 
+
+
+// MARK: - - Protocol
 protocol HourlyForecastPresentable {
+    
+    
+    // MARK: - -- Properties
     var hourlyForecast: [Current] { get }
     
+    
+    // MARK: - -- Methods
     func getTime(_ dt: Double) -> String
     func getTemp(_ kelvin: Float) -> Int
     func getIcon(_ forecast: Current) -> String
@@ -21,10 +29,19 @@ protocol HourlyForecastPresentable {
     func getSunriseTime() -> String
 }
 
+// MARK: - - Presenter
+
+/**
+ A presenter object that formats data for HourlyForecastViews.
+ */
 class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
+    
+    
+    // MARK: - -- Properties
     private let interactor: WeatherInteractorActions
     @Published var hourlyForecast = [Current]()
     
+    // MARK: - -- Lifecycle
     init(interactor: WeatherInteractorActions) {
         self.interactor = interactor
         
@@ -32,13 +49,15 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         self.hourlyForecast = hourly
     }
     
+    // MARK: - -- Methods
+    
     /**
-     A function that converts the given epoch (unix) time into a DateTime String.
+     A function that converts the given epoch (unix) time into a DateTime String in 'ha' format. Will return 'Now' if the hour matches the current hour. (i.e. 12pm, 1am, etc.)
      
      - Parameters:
         - dt: A Double value representing the time in epoch (unix) format
      
-     - Returns: A String value containing the time in h am/pm format. (i.e. 2am)
+     - Returns: A String value containing the time in h am/pm format. Will return 'Now' if the hour matches the current hour. (i.e. 2am)
      */
     func getTime(_ dt: Double) -> String {
         let date = Date(timeIntervalSince1970: dt)
@@ -65,6 +84,14 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         return interactor.convertKToF(kelvin)
     }
     
+    /**
+     A function that returns a SF Symbol's String name, given the forecast. Will return the 'questionmark' symbol if there's an error or nil data.
+     
+     - Parameters:
+        - forecast: A Current object containing the forecast data.
+     
+     - Returns: A String value containing the name of a SF Symbol, depending on the given forecast data. Will return the 'questionmark' symbol if there's an error or nil data.
+     */
     func getIcon(_ forecast: Current) -> String {
         guard let sunset = interactor.weatherData?.current.sunset, let tomorrowSunrise = interactor.weatherData?.daily?[1].sunrise else { return "questionmark" }
         let formatter = DateFormatter()
@@ -83,6 +110,14 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         }
     }
     
+    /**
+     A function that determines whether the sunset time should be shown, given the forecast's time.
+     
+     - Parameters:
+        - forecast: A Current object that contains the forecast data.
+     
+     - Returns: A Bool value representing whether the sunset time should be shown. If the forecast's hour matches the current sunset's hour, will return true. Will return false if there's an error or nil data.
+     */
     func showSunsetTime(_ forecast: Current) -> Bool {
         guard let sunset = interactor.weatherData?.current.sunset else { return false }
 
@@ -98,6 +133,14 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         return sunsetHour == hour
     }
     
+    /**
+     A function that determines whether the sunrise time should be shown, given the forecast's time.
+     
+     - Parameters:
+        - forecast: A Current object that contains the forecast data.
+     
+     - Returns: A Bool value representing whether the sunrise time should be shown. If the forecast's hour matches the current sunrise's hour, will return true. Will return false if there's an error or nil data.
+     */
     func showSunriseTime(_ forecast: Current) -> Bool {
         guard let sunrise = interactor.weatherData?.daily?[1].sunrise else { return false }
 
@@ -113,6 +156,11 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         return sunriseHour == hour
     }
     
+    /**
+     A function that returns the sunset's time in 'h:mma' format. (i.e. 7:45pm)
+     
+     - Returns: A String value containing the sunset's time in 'h:mma' format. Will return an empty String if there's an error or nil data. (i.e. 7:45pm)
+     */
     func getSunsetTime() -> String {
         guard let sunset = interactor.weatherData?.current.sunset else { return "" }
         let formatter = DateFormatter()
@@ -122,12 +170,17 @@ class HourlyForecastPresenter: ObservableObject, HourlyForecastPresentable {
         return formatter.string(from: Date(timeIntervalSince1970: sunset))
     }
     
+    /**
+     A function that returns the sunrise's time in 'h:mma' format. (i.e. 7:45am)
+     
+     - Returns: A String value containing the sunrise's time in 'h:mma' format. Will return an empty String if there's an error or nil data. (i.e. 7:45am)
+     */
     func getSunriseTime() -> String {
         guard let sunrise = interactor.weatherData?.daily?[1].sunrise else { return "" }
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mma"
         formatter.timeZone = .current
-        formatter.pmSymbol = "pm"
+        formatter.amSymbol = "am"
         return formatter.string(from: Date(timeIntervalSince1970: sunrise))
     }
 }

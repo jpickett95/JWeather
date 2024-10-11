@@ -11,14 +11,21 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol PressurePresentable {
+    
+    
+    // MARK: - -- Properties
     var pressure: String? { get }
     var title: String { get }
     var icon: String { get }
 }
 
 // MARK: - - Presenter
+
+/**
+ A presenter object that formats data for PressureViews.
+ */
 class PressurePresenter: ObservableObject, PressurePresentable {
     
     

@@ -7,34 +7,42 @@
 
 import SwiftUI
 
+// MARK: Pressure View
 struct PressureView: View {
+    
+    
+    // MARK: Properties
     private let presenter: PressurePresentable
     
+    
+    // MARK: Lifecycle
     init(presenter: PressurePresentable) {
         self.presenter = presenter
     }
     
+    // MARK: Body
     var body: some View {
         CustomStackView {
             
+            // MARK: Title & Icon
             Label {
-                
                 Text(presenter.title)
-                
             } icon: {
-                
                 Image(systemName: presenter.icon)
-                
             }
             
         } contentView: {
+            
+            //MARK: Content
             ZStack{
-                // MARK: Content Image
+                
+                
+                // MARK: Image
                 Image(systemName: "tirepressure")
                     .foregroundStyle(.white.opacity(0.6))
                     .font(.system(size: 100))
                 
-                // MARK: Content
+                // MARK: Pressure
                 VStack{
                     Text(presenter.pressure ?? "N/A")
                         .foregroundStyle(.white)

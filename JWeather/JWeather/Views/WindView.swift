@@ -7,16 +7,24 @@
 
 import SwiftUI
 
+// MARK: Wind View
 struct WindView: View {
+    
+    
+    // MARK: Properties
     private let presenter: WindPresentable
     
+    
+    // MARK: Lifecycle
     init(presenter: WindPresentable) {
         self.presenter = presenter
     }
     
+    // MARK: Body
     var body: some View {
         CustomStackView {
             
+            // MARK: Title & Icon
             Label{
                 Text(presenter.title)
             } icon: {
@@ -25,8 +33,10 @@ struct WindView: View {
             
         } contentView: {
             
+            // MARK: Content
             HStack(spacing: 10){
                 VStack(alignment: .leading ,spacing: 5) {
+                    
                     // MARK: Wind Speed
                     VStack {
                         HStack{

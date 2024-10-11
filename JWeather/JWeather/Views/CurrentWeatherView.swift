@@ -7,7 +7,10 @@
 
 import SwiftUI
 
+// MARK: Current Weather View
 struct CurrentWeatherView: View {
+    
+    
     // MARK: Properties
     private let presenter: CurrentWeatherPresentable
     var offset: Binding<CGFloat>
@@ -23,6 +26,7 @@ struct CurrentWeatherView: View {
         self.offset = offset
     }
     
+    // MARK: Body
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             

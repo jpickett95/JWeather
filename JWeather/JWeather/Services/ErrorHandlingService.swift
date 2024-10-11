@@ -11,12 +11,13 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol ErrorHandling {
     static func statusCodeSwitch(_ statusCode: Int) -> Error
 }
 
 // MARK: - - Service
+
 /**
  Manager that handles Errors & error messages
  

@@ -11,18 +11,26 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol WindPresentable {
+    
+    
+    // MARK: - -- Properties
     var icon: String { get }
     var title: String { get }
     var degrees: Int? { get set }
     var windSpeed: Double? { get set }
     var windGusts: Double? { get set }
     
+    // MARK: - -- Methods
     func switchDegreesToDirection(_ degrees: Double) -> String
 }
 
 // MARK: - - Presenter
+
+/**
+ A presenter object that formats data for WindViews.
+ */
 class WindPresenter: ObservableObject, WindPresentable {
     
     
@@ -50,7 +58,7 @@ class WindPresenter: ObservableObject, WindPresentable {
      - Parameters:
         - degrees: A Double value containing the direction in degrees.
      
-     - Returns: A String value containing the true direction (i.e. N, NE, N/NE)
+     - Returns: A String value containing the true direction. Will return 'N/A' as the default case. (i.e. N, NE, N/NE)
      */
     func switchDegreesToDirection(_ degrees: Double) -> String {
         switch(degrees) {

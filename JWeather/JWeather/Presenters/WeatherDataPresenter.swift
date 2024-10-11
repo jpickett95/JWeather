@@ -11,19 +11,27 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol WeatherDataPresentable {
+    
+    
+    // MARK: - -- Properties
     var icon: ContentIcon { get }
     var title: ContentTitle { get }
     var content: String? { get }
     var description: String? { get }
     
+    // MARK: - -- Methods
     func switchContent() -> String
     func switchDescription() -> String
     func switchVisibilityDescription(_ visibility: Double) -> String
 }
 
 // MARK: - - Presenter
+
+/**
+ A presenter object that formats data for WeatherDataViews.
+ */
 class WeatherDataPresenter: ObservableObject, WeatherDataPresentable {
     
     
@@ -46,7 +54,14 @@ class WeatherDataPresenter: ObservableObject, WeatherDataPresentable {
     /**
      A function that returns the content value as a String, depending on the presenter's title case.
      
-     - Returns: A String value containing the formatted content for the view, based on the title case.
+     - Returns: A String value containing the formatted content for the view, based on the title case. Will return 'N/A' if there's an error or nil data.
+     
+     ### Cases:
+        - sunset
+        - feelsLike
+        - visibility
+        - precipitation
+        - humidity
      */
     func switchContent() -> String {
         switch (title) {
@@ -78,7 +93,14 @@ class WeatherDataPresenter: ObservableObject, WeatherDataPresentable {
     /**
      A function that returns the content description value as a String, depending on the presenter's title case.
      
-     - Returns: A String value containing the formatted content description for the view, based on the title case.
+     - Returns: A String value containing the formatted content description for the view, based on the title case. Will return 'N/A' if there's an error or nil data.
+     
+     ### Cases:
+        - sunset
+        - feelsLike
+        - visibility
+        - precipitation
+        - humidity
      */
     func switchDescription() -> String {
         switch (title) {
@@ -117,7 +139,7 @@ class WeatherDataPresenter: ObservableObject, WeatherDataPresentable {
      - Parameters:
         - visibility: A Double value representing the visibility data.
      
-     - Returns: A String value containing the formatted visibility description for the view, based on the given visibility value.
+     - Returns: A String value containing the formatted visibility description for the view, based on the given visibility value. Will return 'No visibility data available.' as a default case.
      */
     func switchVisibilityDescription(_ visibility: Double) -> String {
         switch(visibility) {

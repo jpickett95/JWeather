@@ -11,15 +11,24 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol DailyForecastPresentable {
+    
+    
+    // MARK: - -- Properties
     var dailyForecast: [Daily] { get }
     
+    
+    // MARK: - -- Methods
     func getWeekday(_ dt: Double) -> String
     func getTempF(_ kelvin: Float) -> Float
 }
 
 // MARK: - - Presenter
+
+/**
+ A presenter object that formats data for DailyForecastViews.
+ */
 class DailyForecastPresenter: ObservableObject, DailyForecastPresentable {
     
     
@@ -36,6 +45,15 @@ class DailyForecastPresenter: ObservableObject, DailyForecastPresentable {
     }
     
     // MARK: - -- Methods
+    
+    /**
+     A function that returns the weekday in 'EEE' format, given the date in epoch/unix time. If the day is today, will return 'Today' instead. (i.e. Mon, Tue, Wed, etc.)
+     
+     - Parameters:
+        - dt: A Double value containing the date in epoch/unix time.
+     
+     - Returns: A String value containing the weekday in 'EEE' format. If the day is today, will return 'Today' instead. (i.e. Mon, Tue, Wed, etc.)
+     */
     func getWeekday(_ dt: Double) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
@@ -48,6 +66,14 @@ class DailyForecastPresenter: ObservableObject, DailyForecastPresentable {
         return formatter.string(from: Date(timeIntervalSince1970: dt))
     }
     
+    /**
+     A function that converts the given input from Kelvin to Fahrenheit.
+     
+     - Parameters:
+        - kelvin: A Float value representing a temperature in Kelvin (K).
+     
+     - Returns: A Float value representing the converted temperature in Fahrenheit (°F).
+     */
     func getTempF(_ kelvin: Float) -> Float {
         return (kelvin - 273.15) * 9/5 + 32
     }

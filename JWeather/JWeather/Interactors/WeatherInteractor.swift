@@ -11,12 +11,16 @@ import Foundation
 
 
 
-// MARK: - - Protocols
+// MARK: - - Protocol
 protocol WeatherInteractorActions {
+    
+    
+    // MARK: - -- Properties
     var weatherData: ApiResponse? { get }
     var geocodingData: [GeocodingApiResponse]? { get }
     var zipGeocodingData: ZipGeocodingApiResponse? { get }
     
+    // MARK: - -- Methods
     func getWeatherData(lat: Double?, long: Double?) async throws
     func getGeocodingData(geocodingType: GeocodingType, stateOrCity: String?, limit: Int?, zip: String?, lat: String?, long: String?) async throws
     func convertKToF(_ kelvin: Float) -> Int
@@ -28,6 +32,10 @@ protocol WeatherInteractorActions {
 }
 
 // MARK: - - Interactor
+
+/**
+ An interactor object that handles networking & location services. Also contains functions for formatting data from api responses.
+ */
 class WeatherInteractor: ObservableObject, WeatherInteractorActions {
     
     
@@ -42,13 +50,6 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
     init(networkService: Networking, locationService: Locator) {
         self.networkService = networkService
         self.locationService = locationService
-        
-//        Task {
-//            try await getWeatherData()
-//            guard let lat = weatherData?.lat, let long = weatherData?.lon else { return }
-//            try await getGeocodingData(geocodingType: .reverse, stateOrCity: nil, limit: 1, zip: nil, lat: String(lat), long: String(long))
-//            //print(weatherData ?? "No weather data")
-//        }
     }
     
     // MARK: - -- Methods
@@ -116,7 +117,11 @@ class WeatherInteractor: ObservableObject, WeatherInteractorActions {
     }
     
     /**
-     An asynchronous function that fetches weather data from the OneCall api and stores it within the interactor's weatherData property. May throw an error if the call fails or there is a decoding error.
+     An asynchronous function that fetches weather data from the OneCall api and stores it within the interactor's weatherData property. May throw an error if the call fails or there is a decoding error. If parameters are nil, will get the device's location lattitude & longitude to make the api call.
+     
+     - Parameters:
+        - lat: An optional Double value containing the lattitude of the specified location.
+        - long: An optional Double value containing the longitude of the specified location.
      
      - Throws: An Error if the api call fails or there is a decoding error.
      */

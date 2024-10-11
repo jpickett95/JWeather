@@ -7,7 +7,13 @@
 
 import SwiftUI
 
+// MARK: Custom Stack View
+
+/**
+ A custom Stack View that contains a titleview block & content block.
+ */
 struct CustomStackView<Title: View, Content: View>: View {
+    // MARK: Properties
     var titleView: Title
     var contentView: Content
     
@@ -15,17 +21,19 @@ struct CustomStackView<Title: View, Content: View>: View {
     @State var topOffset: CGFloat = 0
     @State var bottomOffset: CGFloat = 0
     
+    // MARK: Lifecycle
     init(@ViewBuilder titleView: @escaping () -> Title, @ViewBuilder contentView: @escaping () -> Content) {
         
         self.titleView = titleView()
         self.contentView = contentView()
     }
     
+    // MARK: Body
     var body: some View {
-
             
             VStack(spacing: 0) {
                 
+                // MARK: TitleView
                 titleView
                     .font(.callout)
                     .foregroundStyle(.white.opacity(0.6))
@@ -42,6 +50,7 @@ struct CustomStackView<Title: View, Content: View>: View {
                     Divider()
                         .background(.white)
                     
+                    // MARK: ContentView
                     contentView
                         .padding()
                     
@@ -79,23 +88,22 @@ struct CustomStackView<Title: View, Content: View>: View {
 
     }
     
-    // Opacity
+    // MARK: Methods
+    /**
+     A function that returns the opacity value, depending on the view's bottomOffset property.
+     
+     - Returns: A CGFloat containing the opacity value, depending on the view's bottomOffset property. Will return 1 if the bottomOffset is greater than 28.
+     */
     func getOpacity() -> CGFloat {
-        
         if bottomOffset < 28 {
             let progress = bottomOffset / 28
             return progress
         }
-        
         return 1
     }
 }
-
-
 
 #Preview {
     ContentView()
         .environmentObject(WeatherInteractor(networkService: NetworkService(), locationService: LocationService()))
 }
-
-

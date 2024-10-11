@@ -7,7 +7,10 @@
 
 import SwiftUI
 
+// MARK: Weather View
 struct WeatherView: View {
+    
+    
     // MARK: Properties
     private let presenter: WeatherPresentable
     private let isMain: Bool
@@ -19,8 +22,10 @@ struct WeatherView: View {
         self.isMain = isMain
     }
     
+    // MARK: Body
     var body: some View {
         ZStack {
+            
             // MARK: Background
             // Geometry Reader for getting width & height
             GeometryReader { proxy in
