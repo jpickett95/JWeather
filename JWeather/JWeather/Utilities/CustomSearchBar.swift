@@ -26,7 +26,7 @@ struct CustomSearchBar: View {
     // MARK: Body
     var body: some View {
         HStack {
-
+            
             // MARK: TextField
             TextField("Atlanta", text: $searchText)
                 .padding(7)

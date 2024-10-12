@@ -29,6 +29,16 @@
 		CF3FFC052CACA5C900D9E942 /* JWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CFEDB7082CB99944009E9D28 /* Exceptions for "JWeatherTests" folder in "JWeather" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MockResponse.json,
+			);
+			target = CF3FFBE42CACA5C500D9E942 /* JWeather */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CF3FFBE72CACA5C500D9E942 /* JWeather */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -37,6 +47,9 @@
 		};
 		CF3FFBFE2CACA5C900D9E942 /* JWeatherTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CFEDB7082CB99944009E9D28 /* Exceptions for "JWeatherTests" folder in "JWeather" target */,
+			);
 			path = JWeatherTests;
 			sourceTree = "<group>";
 		};
